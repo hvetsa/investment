@@ -4,6 +4,7 @@
 import requests
 import json
 import os
+import datetime
 from bs4 import BeautifulSoup
 
 def main():
@@ -59,6 +60,7 @@ def print_ark_report(obj):
 
 def return_html_text_ark_trades( report_obj ):
 
+    report_obj = keep_recent_days( report_obj, 20 )
     uniq_tickers = []
     uniq_dates = []
     for date in report_obj.keys():
@@ -69,7 +71,6 @@ def return_html_text_ark_trades( report_obj ):
                 uniq_tickers.append(ticker)
 
     html = ""
-
     html = html + """
 <html>
   <head>
@@ -94,6 +95,26 @@ def return_html_text_ark_trades( report_obj ):
     return html
 
 # end return_html_text_ark_trades( report_obj )
+
+def keep_recent_days( report_obj, days ):
+
+    return_obj = {}
+    if days == 0:
+        return report_obj
+    else:
+        for date in report_obj.keys():
+            today = datetime.datetime.now()
+            date_day = datetime.datetime.strptime(date, '%Y-%m-%dZ')
+            days_between = (today - date_day).days
+            if days_between > days:
+                continue
+            else:
+                return_obj[date] = report_obj[date]
+
+
+    return return_obj
+
+# end keep_recent_days( uniq_dates, days ):
 
 def get_ticker_row( report_obj, uniq_dates, ticker):
 
