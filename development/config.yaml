@@ -1,0 +1,4 @@
+config_git_dir: /tmp/investment/investment_config
+gh_user_env: GITHUB_USER_HVETSA
+gh_token_env: GITHUB_TOKEN_HVETSA
+git_url: https://GITHUB_USER_HVETSA:GITHUB_TOKEN_HVETSA@github.com/hvetsa/investment_config
